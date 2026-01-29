@@ -44,6 +44,40 @@ O sistema simula operações reais de um estoque, como entrada, saída e transfe
 
 ---
 
+## 🔄 Fluxo de Uso da API
+
+Abaixo está um exemplo de fluxo completo de uso do sistema, simulando um cenário real de estoque:
+
+1. Entrada de produtos no estoque (compra de fornecedor)
+2. Saída de produtos (venda)
+3. Transferência entre estoques
+4. Consulta das movimentações registradas
+
+Essas operações podem ser testadas de duas formas:
+
+- Via **Swagger (OpenAPI)**
+- Via arquivo **`.http`**, localizado em `SistemaEstoqueGenerico.Api/SistemaEstoqueGenerico.Api.http`
+
+---
+
+## 📥 Exemplo de Requisição – Entrada de Estoque
+
+### Request
+
+```json
+POST /api/estoque/entrada
+
+{
+  "produtoId": 1,
+  "quantidade": 10,
+  "responsavel": "Bruno",
+  "contexto": "Compra de fornecedor"
+}
+
+---
+
+
+
 O projeto foi organizado seguindo princípios de arquitetura em camadas, facilitando manutenção, testes e evolução:
 
 Models
@@ -148,3 +182,4 @@ Evoluir a cobertura de testes
 
 Bruno Ricardo Bastos
 Estudante de Engenharia de Software | Desenvolvedor em formação
+```

@@ -23,22 +23,25 @@ public class EstoqueController : ControllerBase
     {
         try
         {
-            var movimentacao = _estoqueService.Entrada(dto);// Chama o serviço de estoque para registrar a entrada
-            return Ok(movimentacao);// Retorna a movimentação registrada
+            var movimentacao = _estoqueService.Entrada(dto);
+            return Ok(new
+            {
+                sucesso = true,
+                mensagem = "Entrada de estoque realizada com sucesso.",
+                dados = movimentacao
+            });
         }
-        catch (InvalidOperationException ex)
+        catch (Exception ex)
         {
-            return BadRequest(new { erro = ex.Message });
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(new { erro = ex.Message });
-        }
-        catch (Exception)
-        {
-            return StatusCode(500, "Erro interno no servidor");
+            return BadRequest(new
+            {
+                sucesso = false,
+                mensagem = ex.Message
+            });
         }
     }
+
+
 
     [HttpPost("saida")]// Rota para registrar uma saída de estoque
     public IActionResult Saida([FromBody] SaidaEstoqueDTO dto)
@@ -46,13 +49,25 @@ public class EstoqueController : ControllerBase
         try
         {
             var movimentacao = _estoqueService.Saida(dto);
-            return Ok(movimentacao);
+            return Ok(
+                new
+                {
+                    sucesso = true,
+                    mensagem = "Saida de estoque realizada com sucesso",
+                    dados = movimentacao
+                });
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(new
+            {
+                sucesso = false,
+                mensagem = ex.Message
+            });
         }
     }
+
+
 
     [HttpPost("transferencia")]
     public IActionResult Transferencia([FromBody] TransferenciaEstoqueDTO dto)
@@ -60,20 +75,32 @@ public class EstoqueController : ControllerBase
         try
         {
             _estoqueService.Transferencia(dto);
-            return Ok("Transferencia realizada com sucesso");
+            return Ok(new
+            {
+                sucesso = true,
+                mensagem = "Transferencia realizada com sucesso"
+            });
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(new
+            {
+                sucesso = false,
+                mensagem = ex.Message
+            });
         }
     }
+
+
 
     [HttpGet("movimentacoes")]
     public IActionResult Movimentacoes()
     {
         var movimentacoes = _estoqueService.ListarMovimentacoes();
-        return Ok(movimentacoes);
+        return Ok(new
+        {
+            sucesso = true,
+            dados = movimentacoes
+        });
     }
-
-
 }

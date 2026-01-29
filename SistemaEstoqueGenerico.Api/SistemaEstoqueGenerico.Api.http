@@ -1,6 +1,54 @@
-@SistemaEstoqueGenerico.Api_HostAddress = http://localhost:5294
+@baseUrl = http://localhost:5294
 
-GET {{SistemaEstoqueGenerico.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+##################################################
+# ENTRADA DE ESTOQUE
+##################################################
+POST {{baseUrl}}/api/estoque/entrada
+Content-Type: application/json
+
+{
+  "produtoId": 1,
+  "quantidade": 10,
+  "responsavel": "Bruno",
+  "contexto": "Compra de fornecedor"
+}
 
 ###
+
+##################################################
+# SAÍDA DE ESTOQUE
+##################################################
+POST {{baseUrl}}/api/estoque/saida
+Content-Type: application/json
+
+{
+  "produtoId": 1,
+  "quantidade": 3,
+  "responsavel": "Bruno",
+  "contexto": "Venda de produto"
+}
+
+###
+
+##################################################
+# TRANSFERÊNCIA ENTRE ESTOQUES
+##################################################
+POST {{baseUrl}}/api/estoque/transferencia
+Content-Type: application/json
+
+{
+  "produtoId": 1,
+  "estoqueOrigemId": 1,
+  "estoqueDestinoId": 2,
+  "quantidade": 4,
+  "responsavel": "Bruno",
+  "contexto": "Redistribuição de estoque"
+}
+
+###
+
+##################################################
+# LISTAR MOVIMENTAÇÕES DE ESTOQUE
+##################################################
+GET {{baseUrl}}/api/estoque/movimentacoes
+
